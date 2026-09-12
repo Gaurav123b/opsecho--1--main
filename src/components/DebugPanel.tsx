@@ -40,14 +40,14 @@ export default function DebugPanel() {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.95 }}
-          className="fixed bottom-4 right-4 z-50 w-96 bg-zinc-950 border border-white/10 rounded-xl shadow-2xl overflow-hidden"
+          className="fixed bottom-4 right-4 z-50 w-96 bg-zinc-950 border border-border-subtle rounded-xl shadow-2xl overflow-hidden"
         >
-          <div className="flex items-center justify-between p-3 bg-zinc-900 border-b border-white/5">
-            <div className="flex items-center gap-2 text-zinc-400">
+          <div className="flex items-center justify-between p-3 bg-zinc-900 border-b border-border-subtle">
+            <div className="flex items-center gap-2 text-text-muted">
               <Terminal className="w-4 h-4" />
               <span className="text-xs font-bold uppercase tracking-widest">Debug Console</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-zinc-500 hover:text-white transition-colors">
+            <button onClick={() => setIsOpen(false)} className="text-text-muted hover:text-white transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -55,26 +55,26 @@ export default function DebugPanel() {
           <div className="p-4 space-y-4 max-h-96 overflow-y-auto font-mono text-[10px]">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-zinc-500 flex items-center gap-2"><Server className="w-3 h-3" /> Socket.IO</span>
-                <span className={socketStatus === 'connected' ? 'text-emerald-400' : 'text-red-400'}>{socketStatus}</span>
+                <span className="text-text-muted flex items-center gap-2"><Server className="w-3 h-3" /> Socket.IO</span>
+                <span className={socketStatus === 'connected' ? 'text-state-fact' : 'text-state-conflict'}>{socketStatus}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-zinc-500 flex items-center gap-2"><Radio className="w-3 h-3" /> Agora RTC</span>
-                <span className="text-blue-400">managed by hook</span>
+                <span className="text-text-muted flex items-center gap-2"><Radio className="w-3 h-3" /> Agora RTC</span>
+                <span className="text-accent">managed by hook</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-zinc-500 flex items-center gap-2"><Database className="w-3 h-3" /> AI Pipeline</span>
+                <span className="text-text-muted flex items-center gap-2"><Database className="w-3 h-3" /> AI Pipeline</span>
                 <span className="text-purple-400">active</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-zinc-500 flex items-center gap-2"><Activity className="w-3 h-3" /> System</span>
+                <span className="text-text-muted flex items-center gap-2"><Activity className="w-3 h-3" /> System</span>
                 <span className="text-zinc-300">nominal</span>
               </div>
             </div>
             
-            <div className="pt-4 border-t border-white/5">
-              <p className="text-zinc-600 mb-2">Instructions:</p>
-              <ul className="text-zinc-500 list-disc list-inside space-y-1">
+            <div className="pt-4 border-t border-border-subtle">
+              <p className="text-text-muted mb-2">Instructions:</p>
+              <ul className="text-text-muted list-disc list-inside space-y-1">
                 <li>Check backend terminal for AI logs</li>
                 <li>Make sure microphone permissions are granted</li>
                 <li>Partial transcripts shown at bottom of screen</li>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Zap, Mail, Lock, Loader2, AlertCircle, ArrowLeft } from "lucide-react";
+import { Mail, Lock, Loader2, AlertCircle, ArrowLeft } from "lucide-react";
+import { motion } from "motion/react";
 import client from "../api/client";
 import { useAuth } from "../context/AuthContext";
 
@@ -29,43 +30,48 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center p-6">
-      <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-zinc-500 hover:text-white transition-colors">
+    <div className="min-h-screen bg-bg-primary dark:bg-bg-primary text-text-primary dark:text-text-primary flex items-center justify-center p-6 transition-colors duration-200">
+      <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-text-muted hover:text-text-primary dark:hover:text-white transition-colors">
         <ArrowLeft className="w-4 h-4" />
         Back to Home
       </Link>
       
-      <div className="w-full max-w-md">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-full max-w-md"
+      >
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-              <Zap className="w-6 h-6 fill-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-accent to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-accent/20">
+              <img src="/logo.png" alt="OpsEcho Logo" className="w-full h-full object-contain" />
             </div>
             <span className="text-2xl font-bold tracking-tight">OpsEcho</span>
           </Link>
           <h1 className="text-2xl font-bold">Welcome back</h1>
-          <p className="text-zinc-400 mt-2">Enter your credentials to access mission control</p>
+          <p className="text-text-muted dark:text-text-muted mt-2">Enter your credentials to access mission control</p>
         </div>
 
-        <div className="bg-zinc-900/50 border border-white/5 p-8 rounded-2xl shadow-2xl backdrop-blur-xl">
+        <div className="bg-bg-surface/80 dark:bg-bg-surface/50 border border-border-subtle dark:border-border-subtle p-8 rounded-2xl shadow-2xl backdrop-blur-xl">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+              <div className="bg-state-conflict/10 border border-state-conflict/20 p-4 rounded-xl flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-state-conflict shrink-0 mt-0.5" />
                 <p className="text-sm text-red-200">{error}</p>
               </div>
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-zinc-400 ml-1">Work Email</label>
+              <label className="text-sm font-medium text-text-muted dark:text-text-muted ml-1">Work Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none"
+                  className="w-full bg-bg-surface dark:bg-bg-surface border border-border-subtle dark:border-border-subtle rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-text-primary dark:text-text-primary"
                   placeholder="name@company.com"
                 />
               </div>
@@ -73,17 +79,17 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <div className="flex justify-between items-center ml-1">
-                <label className="text-sm font-medium text-zinc-400">Password</label>
-                <a href="#" className="text-xs text-blue-400 hover:text-blue-300">Forgot?</a>
+                <label className="text-sm font-medium text-text-muted dark:text-text-muted">Password</label>
+                <a href="#" className="text-xs text-accent hover:text-blue-300">Forgot?</a>
               </div>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none"
+                  className="w-full bg-bg-surface dark:bg-bg-surface border border-border-subtle dark:border-border-subtle rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-text-primary dark:text-text-primary"
                   placeholder="••••••••"
                 />
               </div>
@@ -98,14 +104,14 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="text-center text-zinc-500 text-sm mt-8">
+          <p className="text-center text-text-muted text-sm mt-8">
             Don't have an account?{" "}
-            <Link to="/register" className="text-white hover:text-blue-400 transition-colors font-medium">
+            <Link to="/register" className="text-text-primary dark:text-text-primary hover:text-accent dark:hover:text-accent transition-colors font-medium">
               Create account
             </Link>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

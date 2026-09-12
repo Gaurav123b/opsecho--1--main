@@ -3,9 +3,9 @@ import { Users, ShieldAlert, Activity, BarChart3, Settings, ShieldCheck, Databas
 
 export default function AdminDashboard() {
   const stats = [
-    { label: "Total Users", value: "142", icon: Users, color: "text-blue-500" },
-    { label: "Active Incidents", value: "3", icon: Activity, color: "text-red-500" },
-    { label: "Resolved Today", value: "12", icon: ShieldCheck, color: "text-emerald-500" },
+    { label: "Total Users", value: "142", icon: Users, color: "text-accent" },
+    { label: "Active Incidents", value: "3", icon: Activity, color: "text-state-conflict" },
+    { label: "Resolved Today", value: "12", icon: ShieldCheck, color: "text-state-fact" },
     { label: "AI Jobs Processed", value: "1.4k", icon: BarChart3, color: "text-purple-500" },
   ];
 
@@ -14,32 +14,32 @@ export default function AdminDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2">Admin Control Center</h1>
-          <p className="text-zinc-500">Global system oversight and user management.</p>
+          <p className="text-text-muted">Global system oversight and user management.</p>
         </div>
-        <button className="px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-all text-sm">
+        <button className="px-6 py-2.5 bg-bg-surface text-black font-bold rounded-xl hover:bg-bg-surface transition-all text-sm">
           System Maintenance
         </button>
       </div>
 
       <div className="grid md:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-zinc-900/30 border border-white/5 p-6 rounded-3xl hover:bg-zinc-900/50 transition-all">
+          <div key={stat.label} className="bg-bg-surface dark:bg-bg-surface/30 border border-border-subtle dark:border-border-subtle p-6 rounded-3xl hover:bg-zinc-900/50 transition-all">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-bg-surface/5 flex items-center justify-center">
                 <stat.icon className={cn("w-5 h-5", stat.color)} />
               </div>
-              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Global</span>
+              <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest">Global</span>
             </div>
             <p className="text-2xl font-bold mb-1">{stat.value}</p>
-            <p className="text-xs text-zinc-500">{stat.label}</p>
+            <p className="text-xs text-text-muted">{stat.label}</p>
           </div>
         ))}
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        <section className="bg-zinc-900/30 border border-white/5 rounded-3xl p-8 space-y-6">
+        <section className="bg-bg-surface dark:bg-bg-surface/30 border border-border-subtle dark:border-border-subtle rounded-3xl p-8 space-y-6">
           <div className="flex items-center gap-3 mb-2">
-            <Database className="w-5 h-5 text-blue-500" />
+            <Database className="w-5 h-5 text-accent" />
             <h3 className="font-bold">Infrastructure Status</h3>
           </div>
           <div className="space-y-4">
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
           </div>
         </section>
 
-        <section className="bg-zinc-900/30 border border-white/5 rounded-3xl p-8 space-y-6">
+        <section className="bg-bg-surface dark:bg-bg-surface/30 border border-border-subtle dark:border-border-subtle rounded-3xl p-8 space-y-6">
           <div className="flex items-center gap-3 mb-2">
             <Key className="w-5 h-5 text-purple-500" />
             <h3 className="font-bold">Recent Audit Logs</h3>
@@ -68,11 +68,11 @@ export default function AdminDashboard() {
 
 function StatusRow({ label, status }: { label: string, status: string }) {
   return (
-    <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+    <div className="flex items-center justify-between p-4 bg-bg-surface/5 rounded-2xl border border-border-subtle">
       <span className="text-sm font-medium text-zinc-300">{label}</span>
       <div className="flex items-center gap-2">
         <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-        <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">{status}</span>
+        <span className="text-[10px] font-bold text-state-fact uppercase tracking-widest">{status}</span>
       </div>
     </div>
   );
@@ -80,12 +80,12 @@ function StatusRow({ label, status }: { label: string, status: string }) {
 
 function AuditRow({ user, action, time }: { user: string, action: string, time: string }) {
   return (
-    <div className="flex items-center justify-between text-xs p-2 border-b border-white/5 last:border-0 pb-4 last:pb-0">
+    <div className="flex items-center justify-between text-xs p-2 border-b border-border-subtle last:border-0 pb-4 last:pb-0">
       <div className="space-y-1">
         <p className="font-bold text-zinc-300">{action}</p>
-        <p className="text-zinc-500 text-[10px]">By <span className="text-blue-500">{user}</span></p>
+        <p className="text-text-muted text-[10px]">By <span className="text-accent">{user}</span></p>
       </div>
-      <span className="text-zinc-600 text-[10px]">{time}</span>
+      <span className="text-text-muted text-[10px]">{time}</span>
     </div>
   );
 }

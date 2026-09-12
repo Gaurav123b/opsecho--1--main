@@ -29,7 +29,7 @@ export const processTranscript = async (
     }
 
     // Broadcast transcript to room
-    io.to(`incident:${incidentId}`).emit("TRANSCRIPT_NEW", transcript);
+    io?.to(`incident:${incidentId}`).emit("TRANSCRIPT_NEW", transcript);
 
     // 2. Fetch Context for AI — include BOTH voice transcripts AND chat messages
     const incident = await prisma.incident.findUnique({
@@ -183,9 +183,9 @@ export const processTranscript = async (
           text: aiResult.aiResponse,
         }
       });
-      io.to(`incident:${incidentId}`).emit("TRANSCRIPT_NEW", aiTranscript);
+      io?.to(`incident:${incidentId}`).emit("TRANSCRIPT_NEW", aiTranscript);
       // Emit event specifically for TTS client
-      io.to(`incident:${incidentId}`).emit("AI_SPEAK", { text: aiResult.aiResponse, id: aiTranscript.id });
+      io?.to(`incident:${incidentId}`).emit("AI_SPEAK", { text: aiResult.aiResponse, id: aiTranscript.id });
     }
 
     // 7. Broadcast refreshed state
@@ -206,7 +206,7 @@ export const processTranscript = async (
       },
     });
 
-    io.to(`incident:${incidentId}`).emit("incident:updated", updatedIncident);
+    io?.to(`incident:${incidentId}`).emit("incident:updated", updatedIncident);
   } catch (error) {
     console.error("[AI Processing] Error:", error);
   }

@@ -44,3 +44,45 @@ export const postToSlack = async (userId: string, incidentId: string, actionDesc
     return false;
   }
 };
+
+export const postResolutionToSlack = async (userId: string, incidentId: string, summary: string) => {
+  try {
+    // 1. Get the user's Slack integration token
+    const integration = await prisma.integration.findUnique({
+      where: { userId_provider: { userId, provider: 'SLACK' } }
+    });
+
+    if (!integration || !integration.accessToken) {
+      console.log('No Slack integration found for user');
+      return false;
+    }
+
+    // 2. Fetch incident details for context
+    const incident = await prisma.incident.findUnique({
+      where: { id: incidentId },
+      select: { title: true, roomCode: true, severity: true }
+    });
+
+    // 3. Post message to Slack
+    await axios.post(
+      'https://slack.com/api/chat.postMessage',
+      {
+        channel: '#general', 
+        text: `✅ *OpsEcho Incident Resolved*\n*Incident:* [${incident?.roomCode}] ${incident?.title}\n\n*Summary:*\n${summary}`,
+        unfurl_links: false
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${integration.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    
+    console.log(`Successfully posted resolution summary to Slack #general for incident ${incident?.roomCode}`);
+    return true;
+  } catch (error: any) {
+    console.error('Failed to post resolution to Slack:', error?.response?.data || error.message);
+    return false;
+  }
+};

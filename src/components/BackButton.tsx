@@ -8,8 +8,8 @@ export default function BackButton({ className }: { className?: string }) {
 
   return (
     <button 
-      onClick={() => navigate(-1)} 
-      className={`p-2 rounded-lg bg-zinc-100 dark:bg-white/5 hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center justify-center ${className || ''}`}
+      onClick={() => navigate('/dashboard')} 
+      className={`p-2 rounded-lg bg-bg-surface dark:bg-bg-surface/5 hover:bg-bg-surface dark:hover:bg-bg-surface/10 text-text-muted dark:text-text-muted hover:text-text-primary dark:hover:text-white transition-all flex items-center justify-center ${className || ''}`}
       aria-label="Go back"
     >
       <ArrowLeft className="w-5 h-5" />

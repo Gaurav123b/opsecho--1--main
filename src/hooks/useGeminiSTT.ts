@@ -15,7 +15,8 @@ export const useGeminiSTT = (
   incidentId: string | undefined,
   isEnabled: boolean,
   agoraTrack: MediaStreamTrack | null,   // kept for interface compatibility
-  socket: any
+  socket: any,
+  onFinalTranscriptPosted?: () => void
 ) => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -42,11 +43,14 @@ export const useGeminiSTT = (
         console.error('[STT] POST failed:', response.status, await response.text());
       } else {
         console.log('[STT] Voice transcript sent for AI analysis:', text.trim());
+        if (onFinalTranscriptPosted) {
+          onFinalTranscriptPosted();
+        }
       }
     } catch (err) {
       console.error('[STT] Failed to POST transcript:', err);
     }
-  }, [incidentId]);
+  }, [incidentId, onFinalTranscriptPosted]);
 
   const stopListening = useCallback(() => {
     isActiveRef.current = false;

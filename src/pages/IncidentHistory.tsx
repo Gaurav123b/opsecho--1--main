@@ -30,63 +30,63 @@ export default function IncidentHistory() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2">Incident Archive</h1>
-          <p className="text-zinc-500">Review past incidents, timelines, and post-mortem reports.</p>
+          <p className="text-text-muted">Review past incidents, timelines, and post-mortem reports.</p>
         </div>
         <div className="flex gap-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input 
               type="text" 
               placeholder="Search history..." 
-              className="bg-zinc-900 border border-white/5 rounded-xl py-2.5 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="bg-bg-surface dark:bg-bg-surface border border-border-subtle dark:border-border-subtle rounded-xl py-2.5 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 text-text-primary dark:text-text-primary"
             />
           </div>
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-zinc-900 border border-white/5 rounded-xl hover:bg-zinc-800 transition-colors text-sm font-medium">
+          <button className="flex items-center gap-2 px-4 py-2.5 bg-bg-surface dark:bg-bg-surface border border-border-subtle dark:border-border-subtle rounded-xl hover:bg-bg-primary dark:hover:bg-zinc-800 transition-colors text-sm font-medium text-text-primary dark:text-text-primary shadow-sm dark:shadow-none">
             <Calendar className="w-4 h-4" />
             All Time
           </button>
         </div>
       </div>
 
-      <div className="bg-zinc-900/30 border border-white/5 rounded-3xl overflow-hidden">
+      <div className="bg-bg-surface dark:bg-bg-surface/30 border border-border-subtle dark:border-border-subtle shadow-sm dark:shadow-none rounded-3xl overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-white/[0.02] border-b border-white/5">
-              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Room</th>
-              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Incident</th>
-              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Severity</th>
-              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Status</th>
-              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Created</th>
-              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500"></th>
+            <tr className="bg-bg-primary dark:bg-bg-surface/[0.02] border-b border-border-subtle dark:border-border-subtle">
+              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted">Room</th>
+              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted">Incident</th>
+              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted">Severity</th>
+              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted">Status</th>
+              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted">Created</th>
+              <th className="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-zinc-200 dark:divide-white/5">
             {isLoading ? (
               [1, 2, 3].map(i => (
                 <tr key={i}>
                   <td colSpan={6} className="px-8 py-6 animate-pulse">
-                    <div className="h-4 bg-white/5 rounded w-full" />
+                    <div className="h-4 bg-bg-surface dark:bg-bg-surface/5 rounded w-full" />
                   </td>
                 </tr>
               ))
             ) : incidents.length > 0 ? (
               incidents.map((incident) => (
-                <tr key={incident.id} className="hover:bg-white/[0.01] transition-colors group">
+                <tr key={incident.id} className="hover:bg-bg-primary dark:hover:bg-bg-surface/[0.01] transition-colors group">
                   <td className="px-8 py-5">
-                    <span className="font-mono text-xs font-bold px-2 py-1 bg-zinc-800 rounded border border-white/5 text-zinc-400">
+                    <span className="font-mono text-xs font-bold px-2 py-1 bg-bg-surface dark:bg-bg-surface rounded border border-border-subtle dark:border-border-subtle text-text-muted dark:text-text-muted">
                       {incident.roomCode}
                     </span>
                   </td>
                   <td className="px-8 py-5">
                     <p className="text-sm font-bold truncate max-w-[200px]">{incident.title}</p>
-                    <p className="text-[10px] text-zinc-500 mt-1">{incident.service} • {incident.environment}</p>
+                    <p className="text-[10px] text-text-muted mt-1">{incident.service} • {incident.environment}</p>
                   </td>
                   <td className="px-8 py-5">
                     <div className={cn(
                       "inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold border",
-                      incident.severity === 'SEV-1' ? 'bg-red-500/10 text-red-500 border-red-500/20' :
-                      incident.severity === 'SEV-2' ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' :
-                      'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
+                      incident.severity === 'SEV-1' ? 'bg-red-50 dark:bg-state-conflict/10 text-red-600 dark:text-state-conflict border-red-200 dark:border-state-conflict/20' :
+                      incident.severity === 'SEV-2' ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 border-orange-200 dark:border-orange-500/20' :
+                      'bg-yellow-50 dark:bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 border-yellow-200 dark:border-yellow-500/20'
                     )}>
                       <ShieldAlert className="w-3 h-3" />
                       {incident.severity}
@@ -98,16 +98,16 @@ export default function IncidentHistory() {
                         "w-1.5 h-1.5 rounded-full",
                         incident.status === 'RESOLVED' ? "bg-emerald-500" : "bg-blue-500"
                       )} />
-                      <span className="text-xs font-medium text-zinc-300">{incident.status}</span>
+                      <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300">{incident.status}</span>
                     </div>
                   </td>
                   <td className="px-8 py-5">
-                    <p className="text-xs text-zinc-500">{new Date(incident.createdAt).toLocaleDateString()}</p>
+                    <p className="text-xs text-text-muted">{new Date(incident.createdAt).toLocaleDateString()}</p>
                   </td>
                   <td className="px-8 py-5 text-right">
                     <Link 
                       to={`/incident/${incident.id}`}
-                      className="inline-flex items-center gap-2 text-xs font-bold text-zinc-500 group-hover:text-white transition-colors"
+                      className="inline-flex items-center gap-2 text-xs font-bold text-text-muted group-hover:text-text-primary dark:group-hover:text-white transition-colors"
                     >
                       View Report
                       <ChevronRight className="w-4 h-4" />
@@ -118,7 +118,7 @@ export default function IncidentHistory() {
             ) : (
               <tr>
                 <td colSpan={6} className="px-8 py-20 text-center">
-                  <p className="text-zinc-600 italic">No historical records found.</p>
+                  <p className="text-text-muted italic">No historical records found.</p>
                 </td>
               </tr>
             )}

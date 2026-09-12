@@ -1,27 +1,57 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
   --font-display: "Outfit", sans-serif;
   --font-mono: "Fira Code", monospace;
-  --color-primary: #3b82f6;
+
+  /* Premium Light palette tokens (High Contrast) */
+  --color-bg-primary: #FAFAFA;
+  --color-bg-surface: #FFFFFF;
+  --color-border-subtle: #E5E5E5;
+  --color-border-glow: rgba(99, 102, 241, 0.3);
+  --color-accent: #6366F1; /* Electric Indigo */
+  --color-text-primary: #171717;
+  --color-text-muted: #737373;
+
+  /* State colors (Punchy and clear) */
+  --color-state-fact: #10B981;
+  --color-state-hypothesis: #F59E0B;
+  --color-state-decision: #6366F1;
+  --color-state-action: #A855F7;
+  --color-state-conflict: #EF4444;
   
-  --animate-shimmer: shimmer 2s linear infinite;
-  --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-gradient: gradient 15s ease infinite;
-  --animate-scanline: scanline 8s linear infinite;
-  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@layer base {
+  .dark {
+    /* Linear-inspired pure dark mode */
+    --color-bg-primary: #000000;
+    --color-bg-surface: #0A0A0A;
+    --color-border-subtle: #222222;
+    --color-border-glow: rgba(99, 102, 241, 0.5);
+    --color-accent: #818CF8; /* Lighter indigo for dark mode */
+    --color-text-primary: #EDEDED;
+    --color-text-muted: #A3A3A3;
+    
+    --color-state-fact: #34D399;
+    --color-state-hypothesis: #FBBF24;
+    --color-state-decision: #818CF8;
+    --color-state-action: #C084FC;
+    --color-state-conflict: #F87171;
+  }
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 html, body {
-  @apply bg-zinc-50 text-zinc-900 dark:bg-[#03050a] dark:text-indigo-100 transition-colors duration-200 font-sans antialiased selection:bg-indigo-500/30;
+  @apply bg-bg-primary text-text-primary font-sans antialiased selection:bg-accent/30;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  @apply font-display tracking-tight text-zinc-900 dark:text-white;
+  @apply font-display tracking-tight text-text-primary;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -31,82 +61,35 @@ h1, h2, h3, h4, h5, h6 {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-zinc-300 dark:bg-indigo-500/30;
+  @apply bg-border-subtle;
   border-radius: 10px;
 }
 
-/* Base HUD Panel */
-.glass-panel, .hud-panel {
-  @apply bg-white/70 dark:bg-[#060814]/70 backdrop-blur-2xl border border-zinc-200 dark:border-indigo-500/20 shadow-[0_0_30px_rgba(79,70,229,0.05)];
-  /* Subtle inner glow for sci-fi feel */
-  box-shadow: inset 0 0 20px rgba(79, 70, 229, 0.05), 0 4px 30px rgba(0, 0, 0, 0.5);
+.hud-panel {
+  @apply bg-bg-surface border border-border-subtle shadow-[0_4px_30px_rgba(0,0,0,0.2)];
 }
 
-/* Interactive HUD Card */
-.glass-card, .hud-card {
-  @apply bg-white/50 dark:bg-[#0a0c1a]/60 backdrop-blur-md border border-zinc-200 dark:border-indigo-500/20 transition-all duration-300 hover:shadow-[0_0_20px_rgba(79,70,229,0.2)] hover:border-indigo-500/40;
+.hud-card {
+  @apply bg-bg-surface border border-border-subtle transition-all duration-300;
 }
 
-/* Glowing text utility */
 .text-glow {
-  text-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+  text-shadow: 0 0 10px rgba(91, 127, 219, 0.5), 0 0 20px rgba(91, 127, 219, 0.3);
 }
 
-@keyframes shimmer {
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
+@keyframes orb-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 20px var(--color-accent)); }
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0px); }
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); }
-  50% { opacity: .7; box-shadow: 0 0 5px rgba(99, 102, 241, 0.2); }
-}
-
-/* Intense Aurora Mesh */
-.bg-mesh {
-  background-color: #03050a;
-  background-image: 
-    radial-gradient(ellipse at 10% 20%, rgba(55, 48, 163, 0.4) 0%, transparent 40%),
-    radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 50%, rgba(17, 24, 39, 1) 0%, transparent 80%);
-  background-size: 200% 200%;
-  animation: gradient 20s ease infinite;
-}
-
-/* Tactical Tech Grid overlay */
-.bg-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
-}
-
-@keyframes wave { 0%,100%{transform:scaleY(0.3);} 50%{transform:scaleY(1);} }
-.wave-bar { animation: wave 1s ease-in-out infinite; transform-origin: center; }
-@keyframes orb-pulse { 0%,100%{transform:scale(1); opacity:0.9;} 50%{transform:scale(1.08); opacity:1;} }
-@keyframes orb-rotate { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
 .voice-orb {
-  background: radial-gradient(circle at 40% 35%, #ffffff, #8ec5ff 30%, #7c5cfc 60%, #3b66e0 100%);
-  background-size: 200% 200%;
-  animation: orb-pulse 2.4s ease-in-out infinite, orb-rotate 6s ease infinite;
+  background: var(--color-accent);
+  box-shadow: 0 0 15px var(--color-accent), 0 0 30px var(--color-accent);
+  animation: orb-pulse 2s ease-in-out infinite;
 }
-.voice-orb.idle { animation: none; opacity: 0.5; filter: grayscale(0.6); }
+.voice-orb.idle {
+  animation: none;
+  opacity: 0.3;
+  box-shadow: none;
+  filter: grayscale(0.5);
+}
